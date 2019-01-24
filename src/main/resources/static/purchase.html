@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <title>test proj</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--<meta charset="utf-8">-->
+    <!--<meta http-equiv="X-UA-Compatible" content="IE=edge">-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- jquery -->
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/jquery.validate.min.js"></script> <!-- version 1.13.1-->
+    <script src="js/jquery-ui.min.js"></script> <!-- ver 1.10.3 -->
+
+    <!--angular-->
+    <script src="js/angular.min.js"></script> <!-- version 1.4.3 -->
+    <script type="text/javascript" src="js/angular-sanitize.min.js"></script> <!-- version 1.4.8 -->
+    <script src="js/my-angular-purchase.js"></script>
+
+    <!-- bootstrap -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <script src="js/bootstrap.min.js"></script>
+
+    <!--my css-->
+    <link href="css/my-styles.css" rel="stylesheet">
+
+</head>
+<body ng-app="myApp"  ng-controller="PurchaseController" >
+<form ng-submit="submitPurchase()">
+    <table  border="0">
+        <tr>
+            <td>Purchase Name</td>
+            <td><input type="text" ng-model="purchases.purchaseName"  /></td>
+        </tr>
+        <tr>
+            <td>Purchase address</td>
+            <td><input type="text" ng-model="purchases.purchaseAddress" /></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="submit" value="Submit" class="blue-button" />
+            </td>
+        </tr>
+    </table>
+</form>
+<br/>
+<a class="create-button" ng-click="createPurchase()">Create Purchase</a>
+<table border="1" ng-init="getPurchases()">
+    <tr>
+        <th>Purchase name</th>
+        <th>Purchase address</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    <tr ng-repeat="purchase in purchases">
+        <td> {{ purchase.purchaseName }}</td>
+        <td >{{ purchase.purchaseAddress }}</td>
+        <td>
+            <a ng-click="editPurchase(purchase)" class="edit-button">Edit</a>
+        </td>
+        <td>
+            <a ng-click="deletePurchase(purchase)" class="delete-button">Delete</a>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

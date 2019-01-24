@@ -1,0 +1,212 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <title>test proj</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--<meta charset="utf-8">-->
+    <!--<meta http-equiv="X-UA-Compatible" content="IE=edge">-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- jquery -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!--<script src="js/jquery-1.11.1.min.js"></script>-->
+    <script src="js/jquery.validate.min.js"></script> <!-- version 1.13.1-->
+    <script src="js/jquery-ui.min.js"></script> <!-- ver 1.10.3 -->
+
+    <!--angular-->
+    <script src="js/angular.min.js"></script> <!-- version 1.4.3 -->
+    <script type="text/javascript" src="js/angular-sanitize.min.js"></script> <!-- version 1.4.8 -->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-select/0.20.0/select.min.js"></script> &lt;!&ndash;ui-select&ndash;&gt;-->
+    <script src="js/my-angular.js"></script>
+
+    <!-- bootstrap -->
+    <!--<link href="css/bootstrap.css" rel="stylesheet">-->
+    <!--<script src="js/bootstrap.min.js"></script>-->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
+
+    <!--spinner + - -->
+    <script src="js/jquery.dpNumberPicker.js"></script>
+    <link href="css/jquery.dpNumberPicker-holoLight.css" rel="stylesheet">
+
+    <!--ui-select-->
+    <!--theme-->
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.css">
+    <!-- ui-select files -->
+    <script src="js/select.js"></script>
+    <link rel="stylesheet" href="css/select.css">
+
+    <!--my css-->
+    <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-select/0.20.0/select.min.css">-->
+    <link href="css/main_styles.css" rel="stylesheet">
+
+    <!--my js-->
+    <script src="js/main_styles.js"></script>
+    <script src="js/list_products_module.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons">
+
+
+</head>
+<body ng-app="myApp" ng-controller="MainController">
+
+<nav class="navbar header-top fixed-top navbar-expand-lg navbar-dark bg-dark navbar-header-style">
+    <a class="navbar-brand" href="#"><i class="fa fa-shopping-cart"></i>BuyHelper</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText"
+            aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav ml-md-auto d-md-flex">
+            <li class="nav-item">
+                <a class="nav-link" href="#"><i class="fa fa-user"></i> Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><i class="fa fa-key"></i> Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+
+<form ng-init="getProducts()">
+    <div class="container-fluid">
+        <div class="container">
+            <div class="formBox">
+                <form id="productsForm">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h1>List of Products</h1>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <div class="inputBox">
+                                    <div class="inputText">Product Name</div>
+                                    <!--<input type="text" name="" ng-model="item.productName" class="input-field">-->
+                                    <ui-select class="input-field"
+                                               ng-model="product"
+                                               theme="bootstrap"
+                                               ng-change="onProductSelect(product)"
+                                               close-on-select="true">
+                                        <ui-select-match>{{product.productName}}</ui-select-match>
+                                        <ui-select-choices repeat="item in products | filter:$select.search">
+                                            <div ng-bind-html="item.productName | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="inputBox">
+                                    <div class="inputText">Quantity</div>
+                                    <input type="text" name="" ng-model="productQuantity" class="input-field">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--<a href="#" id="addButton" ng-click="$event.preventDefault(); addNewRow(); saveValues()"><i class="fa fa-plus fa-2x social"></i></a>-->
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <input type="submit" ng-click="saveValues()" name="saveBut" class="button" value="Add Product To List">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</form>
+
+<form>
+    <div class="container">
+        <div class="row">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th class="text-center">#</th>
+                            <th>Product Name</th>
+                            <th class="text-right">Quantity</th>
+                            <th class="text-right">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="item in listObjects">
+                            <td class="text-center">1</td>
+                            <td>{{item.product.productName}}</td>
+                            <td class="text-right">{{item.quantity}}</td>
+                            <td class="td-actions text-right">
+                                <button type="button" rel="tooltip" class="btn btn-success btn-link btn-just-icon btn-sm" data-original-title="" title="">
+                                    <i class="material-icons">edit</i>
+                                </button>
+                                <button type="button" rel="tooltip" class="btn btn-danger btn-link btn-just-icon btn-sm" data-original-title="" title="">
+                                    <i class="material-icons">delete</i>
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+        </div>
+        <div class="row">
+            <button ng-click="saveProductList()" name="add" class="button">Save Product List</button>
+        </div>
+    </div>
+
+</form>
+<!--<form ng-submit="submitUser()">-->
+    <!--<table  border="0">-->
+        <!--<tr>-->
+            <!--<td>User First Name</td>-->
+            <!--<td><input type="text" ng-model="usersTable.userFirstName" /></td>-->
+        <!--</tr>-->
+        <!--<tr>-->
+            <!--<td>User Last Name</td>-->
+            <!--<td><input type="text" ng-model="usersTable.userLastName"  /></td>-->
+        <!--</tr>-->
+        <!--<tr>-->
+            <!--<td>User Email</td>-->
+            <!--<td><input type="text" ng-model="usersTable.userEmail"  /></td>-->
+        <!--</tr>-->
+        <!--<tr>-->
+            <!--<td>User Password</td>-->
+            <!--<td><input type="text" ng-model="usersTable.userPassword"  /></td>-->
+        <!--</tr>-->
+        <!--<tr>-->
+            <!--<td colspan="2">-->
+                <!--<input type="submit" value="Submit" class="blue-button" />-->
+            <!--</td>-->
+        <!--</tr>-->
+    <!--</table>-->
+<!--</form>-->
+<!--<br/>-->
+<!--<a class="create-button" ng-click="createUser()">Create User</a>-->
+<!--<table border="1" ng-init="getUsers()">-->
+    <!--<tr>-->
+        <!--<th>First Name</th>-->
+        <!--<th>Last Name</th>-->
+        <!--<th>Email</th>-->
+        <!--<th>Password</th>-->
+        <!--<th>Edit</th>-->
+        <!--<th>Delete</th>-->
+    <!--</tr>-->
+    <!--<tr ng-repeat="user in users">-->
+        <!--<td> {{ user.userFirstName }}</td>-->
+        <!--<td >{{ user.userLastName }}</td>-->
+        <!--<td >{{ user.userEmail }}</td>-->
+        <!--<td >{{ user.userPassword}}</td>-->
+        <!--<td>-->
+            <!--<a ng-click="editUser(user)" class="edit-button">Edit</a>-->
+        <!--</td>-->
+        <!--<td>-->
+            <!--<a ng-click="deleteUser(user)" class="delete-button">Delete</a>-->
+        <!--</td>-->
+    <!--</tr>-->
+<!--</table>-->
+</body>
+</html>

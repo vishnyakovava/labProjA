@@ -1,0 +1,216 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <title>test proj</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- jquery -->
+        <script src="js/jquery-1.11.1.min.js"></script>
+        <script src="js/jquery.validate.min.js"></script> <!-- version 1.13.1-->
+        <!--<script src="js/jquery-ui.min.js"></script> &lt;!&ndash; ver 1.10.3 &ndash;&gt;-->
+        <script src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+
+
+        <!-- bootstrap -->
+        <!--<link href="css/bootstrap.css" rel="stylesheet">-->
+        <!--<script src="js/bootstrap.min.js"></script>-->
+        <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">-->
+        <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">-->
+        <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+
+        <!-- datatable -->
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+
+
+        <!-- icons -->
+        <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
+        <!--<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">-->
+        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons">
+
+
+        <!-- my js -->
+        <script src="js/styles.js"></script>
+        <!--my css-->
+        <link href="css/user_styles.css" rel="stylesheet">
+
+    </head>
+    <body>
+
+    <script id="template" type="text/x-jquery-tmpl">
+        <div class="row">
+            <h4>Are you sure you want to delete user?</h4>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <h4><small>User Id</small></h4>
+            </div>
+            <div class="col-sm-9">
+                <h4><small>${userId}</small></h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <h4><small>User Email</small></h4>
+            </div>
+            <div class="col-sm-9">
+                <h4 id="userEmailToDelete"><small>${userEmail}</small></h4>
+            </div>
+        </div>
+    </script>
+
+
+
+
+        <div class="container-fluid">
+            <div class="title">
+                <h3>Users</h3>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <button id="addUserBtn" type="button" rel="tooltip" class="btn btn-success btn-round btn-just-icon btn-sm" data-toggle="modal" data-target="#addUserModal" data-original-title="" title="Add user">
+                        <i class="material-icons">add</i>
+                    </button>
+                </div>
+
+                <div class="col-lg-8 col-md-10 ml-auto mr-auto">
+                    <h4><small>Added users</small></h4>
+                    <div class="table-responsive">
+                        <table class="table" id="dynamicTable">
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div></div>
+
+        <!--<form ng-submit="submitUser()">-->
+            <!--<table  border="0">-->
+                <!--&lt;!&ndash;<tr>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<td>User Id</td>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<input type="text" ng-model="usersTable.userId" /></td>&ndash;&gt;-->
+                <!--&lt;!&ndash;</tr>&ndash;&gt;-->
+                <!--<tr>-->
+                    <!--<td>User First Name</td>-->
+                    <!--<td><input type="text" ng-model="usersTable.userFirstName" /></td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                    <!--<td>User Last Name</td>-->
+                    <!--<td><input type="text" ng-model="usersTable.userLastName"  /></td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                    <!--<td>User Email</td>-->
+                    <!--<td><input type="text" ng-model="usersTable.userEmail"  /></td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                    <!--<td>User Password</td>-->
+                    <!--<td><input type="text" ng-model="usersTable.userPassword"  /></td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                    <!--<td colspan="2">-->
+                        <!--<input type="submit" value="Submit" class="blue-button" />-->
+                    <!--</td>-->
+                <!--</tr>-->
+            <!--</table>-->
+        <!--</form>-->
+        <!--<br/>-->
+        <!--<a class="create-button" ng-click="createUser()">Create User</a>-->
+        <!--<table border="1" ng-init="getUsers()">-->
+            <!--<tr>-->
+                <!--<th>First Name</th>-->
+                <!--<th>Last Name</th>-->
+                <!--<th>Email</th>-->
+                <!--<th>Password</th>-->
+                <!--<th>Edit</th>-->
+                <!--<th>Delete</th>-->
+            <!--</tr>-->
+            <!--<tr ng-repeat="user in users">-->
+                <!--<td> {{ user.userFirstName }}</td>-->
+                <!--<td >{{ user.userLastName }}</td>-->
+                <!--<td >{{ user.userEmail }}</td>-->
+                <!--<td >{{ user.userPassword}}</td>-->
+                <!--<td>-->
+                    <!--<a ng-click="editUser(user)" class="edit-button">Edit</a>-->
+                <!--</td>-->
+                <!--<td>-->
+                    <!--<a ng-click="deleteUser(user)" class="delete-button">Delete</a>-->
+                <!--</td>-->
+            <!--</tr>-->
+        <!--</table>-->
+
+        <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="addUserModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addUserModalLabel">Add new user</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label for="defaultName">First Name</label>
+                            </div>
+                            <div class="col-sm-8">
+                                <input class="borderedInput" type="text" id="defaultName">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label for="defaultLastName">Last Name</label>
+                            </div>
+                            <div class="col-sm-8">
+                                <input class="borderedInput" type="text" id="defaultLastName">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label for="defaultEmail">Email</label>
+                            </div>
+                            <div class="col-sm-8">
+                                <input class="borderedInput" type="text" id="defaultEmail">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label for="defaultPass">Password</label>
+                            </div>
+                            <div class="col-sm-8">
+                                <input class="borderedInput" type="password" id="defaultPass">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="clearModal()" data-dismiss="modal">Close</button>
+                        <button id="saveBtn" type="button" class="btn btn-primary" >Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmDeleteLabel">Confirm Deletion</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="appendTemplate">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button id="deleteBtn" onclick="deleteUser()" type="button" class="btn btn-primary">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>
